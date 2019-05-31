@@ -31,8 +31,8 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
 
     init {
         speedTest.execute()
-        getNetworkInfo()
-        wifiInfo()
+        var networkInfo = getNetworkInfo()
+        var wifiInfo = wifiInfo()
 
         // validate results
         // RSSI > -60 dBm
@@ -52,7 +52,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         override fun onReceive(context: Context, intent: Intent) {
             val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
             if (success) {
-//                scanSuccess()
+                scanSuccess()
             } else {
                 scanFailure()
             }
