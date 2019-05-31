@@ -5,6 +5,7 @@ import android.content.pm.PackageManager
 import android.net.wifi.WifiInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.MutableInt
 import android.view.View
 import com.fivestars.wifihealthcheck.model.NetworkInfo
 import com.fivestars.wifihealthcheck.usecase.SpeedTestResults
@@ -12,6 +13,7 @@ import com.fivestars.wifihealthcheck.usecase.WifiScanData
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
+import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -78,6 +80,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         xAxis.granularity = 1f
         xAxis.labelCount = 11
         xAxis.axisMinimum = .5f
+        xAxis.setDrawLabels(false)
 
         var values = mutableListOf<BarEntry>()
 
@@ -96,7 +99,19 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
 
         var dataSet = BarDataSet(values, "Signal Strength")
+        dataSet.colors = getColors()
         chart1.data = BarData(dataSet)
         chart1.setPinchZoom(false)
+        chart1.legend.isEnabled = false
+    }
+
+    private fun getColors(): MutableList<Int> {
+
+        // have as many colors as stack-values per entry
+        val colors = IntArray(5)
+
+        System.arraycopy(ColorTemplate.JOYFUL_COLORS, 0, colors, 0, 5)
+
+        return colors.toMutableList()
     }
 }
