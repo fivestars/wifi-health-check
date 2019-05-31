@@ -76,42 +76,33 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         wifi_scan.text = wifiScanData.toString()
         speed_results.text = speedTestResults.toString()
 
+        showChart(wifiScanData)
+    }
+
+    private fun showChart(wifiScanData: WifiScanData) {
         val xAxis = chart1.xAxis
         xAxis.granularity = 1f
         xAxis.labelCount = 11
         xAxis.axisMinimum = .5f
-        xAxis.setDrawLabels(false)
 
-        var values = mutableListOf<BarEntry>()
+        val values = mutableListOf<BarEntry>()
 
         for (i in wifiScanData.indices) {
-
-            if (wifiScanData[i].isNotEmpty()) {
-                wifiScanData[i].sortedBy { it.rssi }
-            }
-
             val signals = arrayListOf<Float>()
-
-            wifiScanData[i].forEach { signals.add( 100f + it.rssi) }
-
-            values.add(BarEntry((i + 1).toFloat(), signals.toFloatArray()))
-
+            wifiScanData[i].forEach { signals.add(100f + it.rssi) }
+            values.add(BarEntry((i + 1).toFloat(), signals.sortedDescending().toFloatArray()))
         }
 
-        var dataSet = BarDataSet(values, "Signal Strength")
+        val dataSet = BarDataSet(values, "Signal Strength")
         dataSet.colors = getColors()
         chart1.data = BarData(dataSet)
         chart1.setPinchZoom(false)
-        chart1.legend.isEnabled = false
+        chart1.description.isEnabled = false
     }
 
     private fun getColors(): MutableList<Int> {
-
-        // have as many colors as stack-values per entry
         val colors = IntArray(5)
-
         System.arraycopy(ColorTemplate.JOYFUL_COLORS, 0, colors, 0, 5)
-
         return colors.toMutableList()
     }
 }
