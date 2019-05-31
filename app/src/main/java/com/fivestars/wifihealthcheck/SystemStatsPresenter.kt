@@ -1,13 +1,85 @@
 package com.fivestars.wifihealthcheck
 
+import android.content.BroadcastReceiver
 import android.content.Context
 import android.net.wifi.WifiManager
 import com.fivestars.wifihealthcheck.utils.executeAsRoot
 import android.content.Context.WIFI_SERVICE
+import android.content.Intent
+import android.content.IntentFilter
 import android.net.wifi.WifiInfo
+import android.util.Log
 
 
 class SystemStatsPresenter  {
+
+    private var context: MainActivity? = null
+    private lateinit var wifiManager: WifiManager
+
+    fun startUp(context: MainActivity) {
+        this.context = context
+        wifiManager = context.getSystemService(WIFI_SERVICE) as WifiManager
+    }
+
+    fun shutDown() {
+        context?.unregisterReceiver(wifiScanReceiver)
+    }
+
+    val wifiScanReceiver = object : BroadcastReceiver() {
+
+        override fun onReceive(context: Context, intent: Intent) {
+            val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
+            if (success) {
+                scanSuccess()
+            } else {
+                scanFailure()
+            }
+        }
+    }
+
+    private fun scanSuccess() {
+        val data = wifiManager.scanResults
+
+        val channels: List<MutableList<Network>> = List(size = 11) {
+            mutableListOf<Network>()
+        }
+
+        data.forEach { result ->
+            val channel = result.frequency.frequenctyToChannel() - 1
+
+            if (result.SSID.isEmpty()) {
+                return@forEach
+            }
+
+            channels[channel].add(
+                Network(
+                    ssid = result.SSID,
+                    rssi = result.level
+                )
+            )
+        }
+        Log.d("hey", "")
+    }
+
+    private fun scanFailure() {
+        Log.d("scan fail", "")
+    }
+
+
+    fun wifiScan() {
+        val intentFilter = IntentFilter()
+        intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
+        context?.registerReceiver(wifiScanReceiver, intentFilter)
+
+        val success = wifiManager.startScan()
+        if (!success) {
+            // scan failure handling
+            scanFailure()
+        }
+    }
+
+
+    private val GET_SYSTEM_STATS_INFO = "GET_SYSTEM_STATS_INFO"
 
     companion object {
         const val NETWORK_INFO_COMMAND = "ip -s -o link"
@@ -20,8 +92,7 @@ class SystemStatsPresenter  {
         return getMostUsed(networks)
     }
 
-    fun wifiInfo(context: Context): WifiInfo {
-        val wifiManager = context.applicationContext.getSystemService(WIFI_SERVICE) as WifiManager
+    fun wifiInfo(): WifiInfo {
         return wifiManager.connectionInfo
     }
 

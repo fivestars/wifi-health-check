@@ -7,3 +7,8 @@ data class NetworkInfo(
     val rxData: Map<String, Int>,
     val txData: Map<String, Int>
 )
+
+data class Network(
+    val ssid: String,
+    val rssi: Int
+)
