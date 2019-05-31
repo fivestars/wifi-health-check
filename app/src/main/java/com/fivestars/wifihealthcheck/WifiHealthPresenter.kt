@@ -40,7 +40,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
 
         var pass = true
 
-        if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 5 || wifiInfo.linkSpeed < 42 || packetLoss > .05) {
+        if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 2 || wifiInfo.linkSpeed < 42 || packetLoss > .05) {
             pass = false
         }
 
