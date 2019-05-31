@@ -10,7 +10,7 @@ data class AllTheData(
     val networkInfo: NetworkInfo,
     val wifiInfo: WifiInfo,
     val wifiScanData: WifiScanData,
-    val speedTestResults: SpeedTestResults
+    val speedTestResults: SpeedTestResults?
 )
 
 class WifiHealthPresenter(private val mainActivity: MainActivity) {
@@ -23,7 +23,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
     private val speedTestUseCase = SpeedTestUseCase()
 
     suspend fun execute(): AllTheData {
-        val speedResults = speedTestUseCase.speedTest()
+        //val speedResults = speedTestUseCase.speedTest()
 
         val networkInfo = networkInfoUseCase.getNetworkInfo()
         val wifiInfo = wifiInfoUseCase.wifiInfo()
@@ -34,7 +34,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         // Speed > 5 Mbps
         // Packet Loss < 5%
         // Link Rate > 43 Mbps
-        return AllTheData(networkInfo, wifiInfo, wifiScanData, speedResults)
+        return AllTheData(networkInfo, wifiInfo, wifiScanData, null)
     }
 
     fun shutDown() {

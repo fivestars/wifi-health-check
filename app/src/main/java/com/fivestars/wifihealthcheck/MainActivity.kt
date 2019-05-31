@@ -9,6 +9,9 @@ import android.view.View
 import com.fivestars.wifihealthcheck.model.NetworkInfo
 import com.fivestars.wifihealthcheck.usecase.SpeedTestResults
 import com.fivestars.wifihealthcheck.usecase.WifiScanData
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
@@ -56,12 +59,13 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
     }
 
     private fun doTheThing() = launch {
+        // returning data from a presenter is a pet peeve and also breaks command/query <3
         val data = presenter.execute()
 
         showResults(data.networkInfo, data.wifiInfo, data.wifiScanData, data.speedTestResults)
     }
 
-    private fun showResults(networkInfo: NetworkInfo, wifiInfo: WifiInfo, wifiScanData: WifiScanData, speedTestResults: SpeedTestResults) {
+    private fun showResults(networkInfo: NetworkInfo, wifiInfo: WifiInfo, wifiScanData: WifiScanData, speedTestResults: SpeedTestResults?) {
         progress_frame_layout.visibility = View.GONE
         results_layout.visibility = View.VISIBLE
 
@@ -69,5 +73,30 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         wifi_info.text = wifiInfo.toString()
         wifi_scan.text = wifiScanData.toString()
         speed_results.text = speedTestResults.toString()
+
+        val xAxis = chart1.xAxis
+        xAxis.granularity = 1f
+        xAxis.labelCount = 11
+        xAxis.axisMinimum = .5f
+
+        var values = mutableListOf<BarEntry>()
+
+        for (i in wifiScanData.indices) {
+
+            if (wifiScanData[i].isNotEmpty()) {
+                wifiScanData[i].sortedBy { it.rssi }
+            }
+
+            val signals = arrayListOf<Float>()
+
+            wifiScanData[i].forEach { signals.add( 100f + it.rssi) }
+
+            values.add(BarEntry((i + 1).toFloat(), signals.toFloatArray()))
+
+        }
+
+        var dataSet = BarDataSet(values, "Signal Strength")
+        chart1.data = BarData(dataSet)
+        chart1.setPinchZoom(false)
     }
 }

@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:orientation="vertical"
         tools:context=".MainActivity">
 
     <FrameLayout
             android:id="@+id/progress_frame_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
 
         <ProgressBar android:layout_width="wrap_content"
                      android:layout_height="wrap_content"
@@ -23,6 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
+            android:layout_gravity="top"
+            android:gravity="top"
             android:visibility="gone">
 
         <TextView
@@ -50,6 +51,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
+        <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/chart1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"/>
+
     </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>
