@@ -2,13 +2,9 @@ package com.fivestars.wifihealthcheck
 
 import android.Manifest
 import android.content.pm.PackageManager
-import android.net.wifi.WifiInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.MutableInt
 import android.view.View
-import com.fivestars.wifihealthcheck.model.NetworkInfo
-import com.fivestars.wifihealthcheck.usecase.SpeedTestResults
 import com.fivestars.wifihealthcheck.usecase.WifiScanData
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
@@ -62,20 +58,17 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     private fun doTheThing() = launch {
         // returning data from a presenter is a pet peeve and also breaks command/query <3
-        val data = presenter.execute()
-
-        showResults(data.networkInfo, data.wifiInfo, data.wifiScanData, data.speedTestResults)
+        presenter.execute()
     }
 
-    private fun showResults(networkInfo: NetworkInfo, wifiInfo: WifiInfo, wifiScanData: WifiScanData, speedTestResults: SpeedTestResults?) {
+    fun showResults(wifiScanData: WifiScanData, pass: Boolean) {
         progress_frame_layout.visibility = View.GONE
         results_layout.visibility = View.VISIBLE
 
-        network_info.text = networkInfo.toString()
-        wifi_info.text = wifiInfo.toString()
-        wifi_scan.text = wifiScanData.toString()
-        speed_results.text = speedTestResults.toString()
-
+        pass_fail_view.text = when {
+            pass -> "Pass"
+            else -> "Fail"
+        }
         showChart(wifiScanData)
     }
 

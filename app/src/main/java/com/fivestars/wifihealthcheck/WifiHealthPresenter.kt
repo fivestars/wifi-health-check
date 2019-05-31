@@ -22,8 +22,8 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
     private val wifiScanUseCase = WifiScanUseCase(wifiManager)
     private val speedTestUseCase = SpeedTestUseCase()
 
-    suspend fun execute(): AllTheData {
-        //val speedResults = speedTestUseCase.speedTest()
+    suspend fun execute() {
+        val speedResults = speedTestUseCase.speedTest()
 
         val networkInfo = networkInfoUseCase.getNetworkInfo()
         val wifiInfo = wifiInfoUseCase.wifiInfo()
@@ -34,7 +34,16 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         // Speed > 5 Mbps
         // Packet Loss < 5%
         // Link Rate > 43 Mbps
-        return AllTheData(networkInfo, wifiInfo, wifiScanData, null)
+
+        val packetLoss = networkInfo.rxData.get("packets") / networkInfo.rxData[4]
+
+        var pass = true
+
+        if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 5 || wifiInfo.linkSpeed < 42) {
+            pass = false
+        }
+
+        mainActivity.showResults(wifiScanData, pass)
     }
 
     fun shutDown() {

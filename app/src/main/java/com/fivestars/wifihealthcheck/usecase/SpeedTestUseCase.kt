@@ -1,6 +1,5 @@
 package com.fivestars.wifihealthcheck.usecase
 
-import android.os.AsyncTask
 import android.util.Log
 import fr.bmartel.speedtest.SpeedTestReport
 import fr.bmartel.speedtest.SpeedTestSocket
