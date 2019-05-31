@@ -9,12 +9,13 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
 
-    private val presenter = WifiHealthPresenter(this)
+    private lateinit var presenter : WifiHealthPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         requestWifiPermission()
+        presenter = WifiHealthPresenter(this)
     }
 
     override fun onDestroy() {

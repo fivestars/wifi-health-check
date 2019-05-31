@@ -33,6 +33,13 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         speedTest.execute()
         getNetworkInfo()
         wifiInfo()
+
+        // validate results
+        // RSSI > -60 dBm
+        // Speed > 5 Mbps
+        // Packet Loss < 5%
+        // Link Rate > 43 Mbps
+
         mainActivity.showResults()
     }
 
