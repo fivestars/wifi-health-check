@@ -31,8 +31,9 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
 
     init {
         speedTest.execute()
-        var networkInfo = getNetworkInfo()
-        var wifiInfo = wifiInfo()
+
+        val networkInfo = getNetworkInfo()
+        val wifiInfo = wifiInfo()
 
         // validate results
         // RSSI > -60 dBm
@@ -40,7 +41,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         // Packet Loss < 5%
         // Link Rate > 43 Mbps
 
-        mainActivity.showResults()
+        mainActivity.showResults(networkInfo, wifiInfo)
     }
 
     fun shutDown() {
@@ -100,13 +101,9 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         }
     }
 
-    fun getNetworkInfo(): NetworkInfo? {
+    fun getNetworkInfo(): NetworkInfo {
         val networkInfoRaw = executeAsRoot(NETWORK_INFO_COMMAND, lineBreak = "\n")
         val networks = parseNetworkInfo(networkInfoRaw)
-
-        if (networks.isEmpty()) {
-            return null;
-        }
 
         return getMostUsed(networks)
     }

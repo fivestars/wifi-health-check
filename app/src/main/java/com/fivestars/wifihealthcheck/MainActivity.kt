@@ -2,9 +2,11 @@ package com.fivestars.wifihealthcheck
 
 import android.Manifest
 import android.content.pm.PackageManager
+import android.net.wifi.WifiInfo
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import com.fivestars.wifihealthcheck.model.NetworkInfo
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -45,10 +47,11 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun showResults() {
+    fun showResults(networkInfo: NetworkInfo, wifiInfo: WifiInfo) {
         progress_frame_layout.visibility = View.GONE
         results_layout.visibility = View.VISIBLE
 
-        network_info.text = "777"
+        network_info.text = networkInfo.toString()
+        wifi_info.text = wifiInfo.toString()
     }
 }
