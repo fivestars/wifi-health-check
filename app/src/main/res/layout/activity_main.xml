@@ -22,6 +22,7 @@
             android:id="@+id/results_layout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:orientation="vertical"
             android:visibility="gone">
 
         <TextView
@@ -33,6 +34,16 @@
                 android:id="@+id/network_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
+
+        <TextView
+                android:id="@+id/wifi_scan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+
+        <TextView
+                android:id="@+id/speed_results"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
 
         <TextView
                 android:id="@+id/link_speed_text_view"
