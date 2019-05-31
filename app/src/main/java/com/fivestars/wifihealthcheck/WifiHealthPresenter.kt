@@ -47,7 +47,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         val rxDropped = after.rxData.getValue("dropped") - before.rxData.getValue("dropped")
         val txDropped = after.txData.getValue("dropped") - before.txData.getValue("dropped")
 
-        return (rxDropped + txDropped + 0.0) / (rxPackets + txPackets)
+        return ((rxDropped + txDropped + 0.0) / (rxPackets + txPackets)) * 100
     }
 
     fun shutDown() {
