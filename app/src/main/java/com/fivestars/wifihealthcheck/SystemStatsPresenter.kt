@@ -35,7 +35,7 @@ class SystemStatsPresenter  {
         override fun onReceive(context: Context, intent: Intent) {
             val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
             if (success) {
-                scanSuccess()
+//                scanSuccess()
             } else {
                 scanFailure()
             }

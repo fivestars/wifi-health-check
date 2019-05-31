@@ -8,14 +8,30 @@
         android:orientation="vertical"
         tools:context=".MainActivity">
 
-    <TextView
-            android:id="@+id/wifi_info"
+    <FrameLayout
+            android:id="@+id/progress_frame_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content">
 
-    <TextView
-            android:id="@+id/network_info"
+        <ProgressBar android:layout_width="wrap_content"
+                     android:layout_height="wrap_content"
+                     style="progress"/>
+    </FrameLayout>
+
+    <FrameLayout
+            android:id="@+id/results_frame_layout"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+        <TextView
+                android:id="@+id/wifi_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+        <TextView
+                android:id="@+id/network_info"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+    </FrameLayout>
 
 </LinearLayout>
