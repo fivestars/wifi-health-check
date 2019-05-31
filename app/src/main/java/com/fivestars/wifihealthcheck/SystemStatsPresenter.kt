@@ -9,9 +9,14 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiInfo
 import android.util.Log
+import com.fivestars.wifihealthcheck.utils.frequenctyToChannel
 
 
 class SystemStatsPresenter  {
+
+    companion object {
+        const val NETWORK_INFO_COMMAND = "ip -s -o link"
+    }
 
     private var context: MainActivity? = null
     private lateinit var wifiManager: WifiManager
@@ -78,16 +83,13 @@ class SystemStatsPresenter  {
         }
     }
 
-
-    private val GET_SYSTEM_STATS_INFO = "GET_SYSTEM_STATS_INFO"
-
-    companion object {
-        const val NETWORK_INFO_COMMAND = "ip -s -o link"
-    }
-
-    fun getNetworkInfo(): NetworkInfo {
+    fun getNetworkInfo(): NetworkInfo? {
         val networkInfoRaw = executeAsRoot(NETWORK_INFO_COMMAND, lineBreak = "\n")
         val networks = parseNetworkInfo(networkInfoRaw)
+
+        if (networks.isEmpty()) {
+            return null;
+        }
 
         return getMostUsed(networks)
     }
