@@ -1,4 +1,4 @@
-package com.fivestars.wifihealthcheck.utils
+package com.fivestars.wifihealthcheck.util
 
 import java.io.BufferedReader
 import java.io.DataOutputStream

@@ -3,16 +3,18 @@ package com.fivestars.wifihealthcheck
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.net.wifi.WifiManager
-import com.fivestars.wifihealthcheck.utils.executeAsRoot
+import com.fivestars.wifihealthcheck.util.executeAsRoot
 import android.content.Context.WIFI_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiInfo
 import android.util.Log
-import com.fivestars.wifihealthcheck.utils.frequenctyToChannel
+import com.fivestars.wifihealthcheck.model.Network
+import com.fivestars.wifihealthcheck.model.NetworkInfo
+import com.fivestars.wifihealthcheck.util.frequenctyToChannel
 
 
-class SystemStatsPresenter  {
+class WifiHealthPresenter  {
 
     companion object {
         const val NETWORK_INFO_COMMAND = "ip -s -o link"

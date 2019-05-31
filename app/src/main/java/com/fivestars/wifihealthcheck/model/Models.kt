@@ -1,4 +1,4 @@
-package com.fivestars.wifihealthcheck
+package com.fivestars.wifihealthcheck.model
 
 data class NetworkInfo(
     val interfaceFlags: List<String>,

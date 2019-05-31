@@ -16,7 +16,7 @@ import java.math.RoundingMode
 
 class MainActivity : AppCompatActivity() {
 
-    val presenter = SystemStatsPresenter()
+    val presenter = WifiHealthPresenter()
     val speedTest = SpeedTestTask()
 
     override fun onCreate(savedInstanceState: Bundle?) {

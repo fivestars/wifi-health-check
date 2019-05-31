@@ -1,0 +1,185 @@
+{
+  "project_info": {
+    "project_number": "393542465576",
+    "firebase_url": "https://fivestars-yoshi-staging.firebaseio.com",
+    "project_id": "fivestars-yoshi-staging",
+    "storage_bucket": "fivestars-yoshi-staging.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:fe53c34695404a97",
+        "android_client_info": {
+          "package_name": "com.fivestars.mpos.clover"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:8e3dbd6eed0c1a6e",
+        "android_client_info": {
+          "package_name": "com.fivestars.mpos.fourleaf"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:9bb6b9bb4047c4c7",
+        "android_client_info": {
+          "package_name": "com.fivestars.mpos.square"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:82d5801292797b79",
+        "android_client_info": {
+          "package_name": "com.fivestars.mpos.toast"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:291d7adcc60b54df",
+        "android_client_info": {
+          "package_name": "com.fivestars.wifihealthcheck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:393542465576:android:a5bdc5f39cd3ea61",
+        "android_client_info": {
+          "package_name": "com.fivestars.yoshi"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDwNo4io22soNbWxOPheqfkx0McRsuov0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "393542465576-5k8ltt672m0tojg2ujbk3cd2l520d6k3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
