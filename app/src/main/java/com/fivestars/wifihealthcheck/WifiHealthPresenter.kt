@@ -8,31 +8,39 @@ import android.content.Context.WIFI_SERVICE
 import android.content.Intent
 import android.content.IntentFilter
 import android.net.wifi.WifiInfo
+import android.os.AsyncTask
 import android.util.Log
 import com.fivestars.wifihealthcheck.model.Network
 import com.fivestars.wifihealthcheck.model.NetworkInfo
 import com.fivestars.wifihealthcheck.util.frequenctyToChannel
+import fr.bmartel.speedtest.SpeedTestReport
+import fr.bmartel.speedtest.SpeedTestSocket
+import fr.bmartel.speedtest.inter.IRepeatListener
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 
-class WifiHealthPresenter  {
+class WifiHealthPresenter(private val mainActivity: MainActivity) {
 
     companion object {
         const val NETWORK_INFO_COMMAND = "ip -s -o link"
     }
 
-    private var context: MainActivity? = null
-    private lateinit var wifiManager: WifiManager
+    private var wifiManager: WifiManager = mainActivity.getSystemService(WIFI_SERVICE) as WifiManager
+    private val speedTest = SpeedTestTask()
 
-    fun startUp(context: MainActivity) {
-        this.context = context
-        wifiManager = context.getSystemService(WIFI_SERVICE) as WifiManager
+    init {
+        speedTest.execute()
+        getNetworkInfo()
+        wifiInfo()
+        mainActivity.showResults()
     }
 
     fun shutDown() {
-        context?.unregisterReceiver(wifiScanReceiver)
+        mainActivity.unregisterReceiver(wifiScanReceiver)
     }
 
-    val wifiScanReceiver = object : BroadcastReceiver() {
+    private val wifiScanReceiver = object : BroadcastReceiver() {
 
         override fun onReceive(context: Context, intent: Intent) {
             val success = intent.getBooleanExtra(WifiManager.EXTRA_RESULTS_UPDATED, false)
@@ -76,7 +84,7 @@ class WifiHealthPresenter  {
     fun wifiScan() {
         val intentFilter = IntentFilter()
         intentFilter.addAction(WifiManager.SCAN_RESULTS_AVAILABLE_ACTION)
-        context?.registerReceiver(wifiScanReceiver, intentFilter)
+        mainActivity?.registerReceiver(wifiScanReceiver, intentFilter)
 
         val success = wifiManager.startScan()
         if (!success) {
@@ -192,5 +200,36 @@ class WifiHealthPresenter  {
             networks.add(networkInfo)
         }
         return networks
+    }
+
+    inner class SpeedTestTask : AsyncTask<Void, Void, String>() {
+
+        private val downloads = mutableListOf<BigDecimal>()
+
+        override fun doInBackground(vararg params: Void): String? {
+
+            val speedTestSocket = SpeedTestSocket()
+
+            val url = "https://ashburn02.speedtest.windstream.net:8080/download?nocache=bce25e94-4178-43f4-939d-dd9587321aad&size=250"
+
+            speedTestSocket.startDownloadRepeat(url, 20000, 2000, object : IRepeatListener {
+                override fun onCompletion(report: SpeedTestReport) {
+
+                    val numberOfTests = downloads.size
+                    val totalRate = downloads.reduce { acc, bigDecimal ->  acc + bigDecimal}
+                    val avg = totalRate.divide(BigDecimal.valueOf(numberOfTests.toDouble()), RoundingMode.HALF_UP)
+                    Log.v("speedtest", "[completed] : $avg")
+                }
+
+                override fun onReport(report: SpeedTestReport) {
+                    var rate = report.transferRateBit
+                    val divisor = BigDecimal.valueOf(1000000)
+                    rate = rate.divide(divisor, RoundingMode.HALF_UP)
+                    downloads.add(rate)
+                }
+            })
+
+            return null
+        }
     }
 }
