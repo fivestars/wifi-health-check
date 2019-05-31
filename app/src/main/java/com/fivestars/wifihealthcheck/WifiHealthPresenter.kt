@@ -23,9 +23,12 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
     private val speedTestUseCase = SpeedTestUseCase()
 
     suspend fun execute() {
+        val beforeNetworkInfo = networkInfoUseCase.getNetworkInfo()
         val speedResults = speedTestUseCase.speedTest()
+        val afterNetworkInfo = networkInfoUseCase.getNetworkInfo()
 
-        val networkInfo = networkInfoUseCase.getNetworkInfo()
+        val packetLoss = calculatePacketLoss(beforeNetworkInfo, afterNetworkInfo)
+
         val wifiInfo = wifiInfoUseCase.wifiInfo()
         val wifiScanData = wifiScanUseCase.wifiScan(mainActivity)
 
@@ -35,15 +38,24 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         // Packet Loss < 5%
         // Link Rate > 43 Mbps
 
-        val packetLoss = networkInfo.rxData.get("packets") / networkInfo.rxData[4]
-
         var pass = true
 
-        if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 5 || wifiInfo.linkSpeed < 42) {
+        if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 5 || wifiInfo.linkSpeed < 42 || packetLoss > .05) {
             pass = false
         }
 
         mainActivity.showResults(wifiScanData, pass)
+
+    }
+
+    fun calculatePacketLoss(before: NetworkInfo, after: NetworkInfo): Double {
+        val rxPackets = after.rxData.getValue("packets") - before.rxData.getValue("packets")
+        val txPackets = after.txData.getValue("packets") - before.txData.getValue("packets")
+
+        val rxDropped = after.rxData.getValue("dropped") - before.rxData.getValue("dropped")
+        val txDropped = after.txData.getValue("dropped") - before.txData.getValue("dropped")
+
+        return ((rxDropped + txDropped + 0.0) / (rxPackets + txPackets)) * 100
     }
 
     fun shutDown() {
