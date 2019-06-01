@@ -20,7 +20,7 @@
     <LinearLayout
             android:id="@+id/results_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
             android:layout_gravity="top"
             android:gravity="top"
@@ -59,7 +59,7 @@
         <com.github.mikephil.charting.charts.BarChart
                 android:id="@+id/chart1"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"/>
+                android:layout_height="match_parent"/>
 
     </LinearLayout>
 
