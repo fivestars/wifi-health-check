@@ -1,17 +1,11 @@
-package com.fivestars.wifihealthcheck
+package com.fivestars.wifihealthcheck.main
 
 import android.net.wifi.WifiManager
 import android.content.Context.WIFI_SERVICE
-import android.net.wifi.WifiInfo
 import com.fivestars.wifihealthcheck.model.NetworkInfo
 import com.fivestars.wifihealthcheck.usecase.*
 
-data class AllTheData(
-    val networkInfo: NetworkInfo,
-    val wifiInfo: WifiInfo,
-    val wifiScanData: WifiScanData,
-    val speedTestResults: SpeedTestResults?
-)
+
 
 class WifiHealthPresenter(private val mainActivity: MainActivity) {
 
@@ -23,9 +17,13 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
     private val speedTestUseCase = SpeedTestUseCase()
 
     suspend fun execute() {
+        mainActivity.updateProgress(10)
         val beforeNetworkInfo = networkInfoUseCase.getNetworkInfo()
-        // val speedResults = speedTestUseCase.speedTest()
+        mainActivity.updateProgress(33)
+        val speedResults = speedTestUseCase.speedTest()
+        mainActivity.updateProgress(70)
         val afterNetworkInfo = networkInfoUseCase.getNetworkInfo()
+        mainActivity.updateProgress(95)
 
         val packetLoss = calculatePacketLoss(beforeNetworkInfo, afterNetworkInfo)
 
@@ -39,16 +37,16 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
         // Link Rate > 43 Mbps
 
         var pass = true
-        /*
+
         if (wifiInfo.rssi < -60 || speedResults.download < 5 || speedResults.upload < 2 || wifiInfo.linkSpeed < 42 || packetLoss > .05) {
             pass = false
-        }*/
+        }
 
         mainActivity.showResults(wifiScanData, pass)
 
     }
 
-    fun calculatePacketLoss(before: NetworkInfo, after: NetworkInfo): Double {
+    private fun calculatePacketLoss(before: NetworkInfo, after: NetworkInfo): Double {
         val rxPackets = after.rxData.getValue("packets") - before.rxData.getValue("packets")
         val txPackets = after.txData.getValue("packets") - before.txData.getValue("packets")
 
@@ -61,5 +59,4 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
     fun shutDown() {
         wifiScanUseCase.shutdown(mainActivity)
     }
-
 }

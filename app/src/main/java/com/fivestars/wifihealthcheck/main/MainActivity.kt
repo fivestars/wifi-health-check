@@ -1,23 +1,26 @@
-package com.fivestars.wifihealthcheck
+package com.fivestars.wifihealthcheck.main
 
 import android.Manifest
 import android.content.pm.PackageManager
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import androidx.annotation.FloatRange
+import androidx.appcompat.app.AppCompatActivity
+import com.fivestars.wifihealthcheck.R
 import com.fivestars.wifihealthcheck.usecase.WifiScanData
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.BarData
 import com.github.mikephil.charting.data.BarDataSet
 import com.github.mikephil.charting.data.BarEntry
-import com.github.mikephil.charting.formatter.IAxisValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 import java.util.*
 import kotlin.coroutines.CoroutineContext
 
@@ -34,6 +37,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         setContentView(R.layout.activity_main)
         presenter = WifiHealthPresenter(this)
         requestWifiPermission()
+        advanced_button.setOnClickListener {
+            advanced_results_layout.visibility = View.VISIBLE
+            advanced_button.visibility = View.GONE
+        }
     }
 
     override fun onDestroy() {
@@ -68,9 +75,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         presenter.execute()
     }
 
+    fun updateProgress(progress: Int) {
+        progress_bar.progress = progress
+    }
+
     fun showResults(wifiScanData: WifiScanData, pass: Boolean) {
         progress_frame_layout.visibility = View.GONE
-        results_layout.visibility = View.VISIBLE
+        pass_fail_view.visibility = View.VISIBLE
+        advanced_button.visibility = View.VISIBLE
 
         pass_fail_view.text = when {
             pass -> "Pass"
@@ -78,6 +90,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         }
         showChart(wifiScanData)
     }
+
 
     fun getRandomColor(): Int {
         val rnd = Random()
