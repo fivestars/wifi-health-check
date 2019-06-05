@@ -8,6 +8,7 @@ import android.view.View
 import androidx.annotation.FloatRange
 import androidx.appcompat.app.AppCompatActivity
 import com.fivestars.wifihealthcheck.R
+import com.fivestars.wifihealthcheck.model.AllTheData
 import com.fivestars.wifihealthcheck.usecase.WifiScanData
 import com.github.mikephil.charting.components.AxisBase
 import com.github.mikephil.charting.data.BarData
@@ -79,15 +80,24 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         progress_bar.progress = progress
     }
 
-    fun showResults(wifiScanData: WifiScanData, pass: Boolean) {
+    fun showResults(
+        allTheData: AllTheData,
+        wifiScanData: WifiScanData,
+        pass: Boolean
+    ) {
         progress_frame_layout.visibility = View.GONE
         pass_fail_layout.visibility = View.VISIBLE
         advanced_button.visibility = View.VISIBLE
+
+        this.network_info.text = "Network Name: " + allTheData.networkInfo.networkName
+        this.wifi_info.text = "Link Speed: " + allTheData.wifiInfo.linkSpeed
+        this.speed_results.text = "Download: " +allTheData.speedTestResults + " Upload: " +allTheData.speedTestResults.upload
 
         pass_fail_view.text = when {
             pass -> "Pass"
             else -> "Fail"
         }
+
         showChart(wifiScanData)
     }
 

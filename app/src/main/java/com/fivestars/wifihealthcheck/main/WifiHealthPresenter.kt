@@ -42,7 +42,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
             pass = false
         }
 
-        mainActivity.showResults(wifiScanData, pass)
+        mainActivity.showResults(, wifiScanData, pass)
 
     }
 
