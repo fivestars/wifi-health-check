@@ -91,7 +91,8 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
         this.network_info.text = "Network Name: " + allTheData.networkInfo.networkName
         this.wifi_info.text = "Link Speed: " + allTheData.wifiInfo.linkSpeed
-        this.speed_results.text = "Download: " +allTheData.speedTestResults + " Upload: " +allTheData.speedTestResults.upload
+        this.speed_results.text = "Download: " +allTheData.speedTestResults?.download + " Upload: " +allTheData.speedTestResults?.upload
+        this.packet_loss.text = "Packet loss: " + allTheData.packetLoss
 
         pass_fail_view.text = when {
             pass -> "Pass"

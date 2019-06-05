@@ -2,6 +2,7 @@ package com.fivestars.wifihealthcheck.main
 
 import android.net.wifi.WifiManager
 import android.content.Context.WIFI_SERVICE
+import com.fivestars.wifihealthcheck.model.AllTheData
 import com.fivestars.wifihealthcheck.model.NetworkInfo
 import com.fivestars.wifihealthcheck.usecase.*
 
@@ -42,7 +43,7 @@ class WifiHealthPresenter(private val mainActivity: MainActivity) {
             pass = false
         }
 
-        mainActivity.showResults(, wifiScanData, pass)
+        mainActivity.showResults(AllTheData(afterNetworkInfo, wifiInfo, wifiScanData, speedResults, packetLoss), wifiScanData, pass)
 
     }
 

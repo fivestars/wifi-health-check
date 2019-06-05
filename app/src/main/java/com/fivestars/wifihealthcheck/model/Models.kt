@@ -21,5 +21,6 @@ data class AllTheData(
     val networkInfo: NetworkInfo,
     val wifiInfo: WifiInfo,
     val wifiScanData: WifiScanData,
-    val speedTestResults: SpeedTestResults?
+    val speedTestResults: SpeedTestResults?,
+    val packetLoss: Double
 )
