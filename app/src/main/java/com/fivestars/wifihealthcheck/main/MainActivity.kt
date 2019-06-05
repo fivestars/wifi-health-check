@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
         requestWifiPermission()
         advanced_button.setOnClickListener {
             advanced_results_layout.visibility = View.VISIBLE
-            advanced_button.visibility = View.GONE
+            pass_fail_layout.visibility = View.GONE
         }
     }
 
@@ -81,7 +81,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope {
 
     fun showResults(wifiScanData: WifiScanData, pass: Boolean) {
         progress_frame_layout.visibility = View.GONE
-        pass_fail_view.visibility = View.VISIBLE
+        pass_fail_layout.visibility = View.VISIBLE
         advanced_button.visibility = View.VISIBLE
 
         pass_fail_view.text = when {

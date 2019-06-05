@@ -30,6 +30,14 @@
             android:text="Running Diagnostic Tests"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/pass_fail_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
     <TextView
         android:id="@+id/pass_fail_view"
         android:layout_width="wrap_content"
@@ -37,8 +45,7 @@
         android:orientation="vertical"
         android:layout_gravity="center"
         android:gravity="top"
-        android:textSize="24sp"
-        android:visibility="gone"/>
+        android:textSize="24sp"/>
 
     <Button
         android:id="@+id/advanced_button"
@@ -47,8 +54,8 @@
         android:layout_marginTop="24dp"
         android:layout_gravity="center_horizontal"
         android:textSize="24sp"
-        android:text="Advanced"
-        android:visibility="gone"/>
+        android:text="Advanced"/>
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/advanced_results_layout"
